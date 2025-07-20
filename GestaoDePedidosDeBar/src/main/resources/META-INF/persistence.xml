@@ -1,35 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="3.2" xmlns="https://jakarta.ee/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_2.xsd">
-  <persistence-unit name="gestaoEscolarPU" transaction-type="RESOURCE_LOCAL">
+  <persistence-unit name="gestaoDePedidosPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-    <class>io.github.guisso.javasepersistencewithhibernateorm.alpha.aluno.Aluno</class>
-    <!--<class>io.github.guisso.javasepersistencewithhibernateorm.alpha.veiculo.Veiculo</class>-->
+    <class>br.edu.ifnmg.aluno.pdss8.comanda.Comanda</class>
+    <class>br.edu.ifnmg.aluno.iro.pedido.Pedido</class>
+    <class>br.edu.ifnmg.aluno.pdss8.cardapio.ItemCardapio</class>
     <properties>
-      <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1:3306/gestaoescolar?zeroDateTimeBehavior=CONVERT_TO_NULL&amp;connectTimeout=5000&amp;socketTimeout=10000&amp;useSSL=false&amp;serverTimezone=America/Fortaleza&amp;useUnicode=true&amp;characterEncoding=UTF-8"/>
+      <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1:3306/gestaodepedidos?zeroDateTimeBehavior=CONVERT_TO_NULL&amp;connectTimeout=5000&amp;socketTimeout=10000&amp;useSSL=false&amp;serverTimezone=America/Fortaleza&amp;useUnicode=true&amp;characterEncoding=UTF-8"/>
       <property name="jakarta.persistence.jdbc.user" value="root"/>
       <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
       <property name="jakarta.persistence.jdbc.password" value=""/>
       <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
       <property name="hibernate.show_sql" value="true"/>
       <property name="hibernate.format_sql" value="true"/>
-      <property name="jakarta.persistence.schema-generation.database.action" value="create"/>
-    </properties>
-  </persistence-unit>
-  <persistence-unit name="gestaoEscolarBetaPU" transaction-type="RESOURCE_LOCAL">
-    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-    <!--<class>io.github.guisso.javasepersistencewithhibernateorm.beta.aluno.Aluno</class>-->
-    <!--<class>io.github.guisso.javasepersistencewithhibernateorm.beta.turma.Turma</class>-->
-    <class>br.edu.ifnmg.aluno.pdss8.beta.credencial.Credencial</class>
-    <class>br.edu.ifnmg.aluno.pdss8.beta.usuario.Usuario</class>
-    <properties>
-      <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1:3306/gestaoescolarbeta?zeroDateTimeBehavior=CONVERT_TO_NULL&amp;connectTimeout=5000&amp;socketTimeout=10000&amp;useSSL=false&amp;serverTimezone=America/Fortaleza&amp;useUnicode=true&amp;characterEncoding=UTF-8"/>
-      <property name="jakarta.persistence.jdbc.user" value="root"/>
-      <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-      <property name="jakarta.persistence.jdbc.password" value=""/>
-      <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
-      <property name="hibernate.show_sql" value="true"/>
-      <property name="hibernate.format_sql" value="true"/>
-      <property name="jakarta.persistence.schema-generation.database.action" value="create"/>
+      <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
     </properties>
   </persistence-unit>
 </persistence>
