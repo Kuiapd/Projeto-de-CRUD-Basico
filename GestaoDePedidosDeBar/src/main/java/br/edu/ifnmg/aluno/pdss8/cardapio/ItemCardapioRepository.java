@@ -21,7 +21,7 @@ public class ItemCardapioRepository extends Repository<ItemCardapio> {
 
     @Override
     public String getJpqlFindAll() {
-        return "SELECT i FROM ItemCardapio i";
+        return "SELECT i FROM ItemCardapio i WHERE i.lixo = false";
     }
 
     @Override
@@ -31,7 +31,7 @@ public class ItemCardapioRepository extends Repository<ItemCardapio> {
 
     @Override
     public String getJpqlDeleteById() {
-        return "DELETE FROM ItemCardapio i WHERE i.id = :id";
+        return "DELETE FROM ItemCardapio i WHERE i.id = :id AND i.lixo = false";
     }
 
     // Busca por nome com LIKE (contém)
@@ -44,4 +44,7 @@ public class ItemCardapioRepository extends Repository<ItemCardapio> {
                     .getResultList();
         }
     }
+
+    
+    
 }

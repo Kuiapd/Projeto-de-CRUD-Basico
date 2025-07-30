@@ -17,8 +17,6 @@ import java.io.Serializable;
  *
  * @author PABLO DANIEL
  */
-
-
 @Entity
 public class ItemCardapio extends ProjectEntity implements Serializable {
 
@@ -28,8 +26,9 @@ public class ItemCardapio extends ProjectEntity implements Serializable {
     @Column(nullable = false)
     private double preco;
 
-    // Getters e Setters
+    private boolean lixo = false;
 
+    //<editor-fold defaultstate="collapsed" desc="Getters/Setters">
     public String getNome() {
         return nome;
     }
@@ -46,12 +45,20 @@ public class ItemCardapio extends ProjectEntity implements Serializable {
         this.preco = preco;
     }
 
+    public boolean isLixo() {
+        return lixo;
+    }
+
+    public void setLixo(boolean lixo) {
+        this.lixo = lixo;
+    }
+
+    //</editor-fold>
     @Override
     public String toString() {
-        return "ItemCardapio{" +
-                "nome='" + nome + '\'' +
-                ", preco=" + preco +
-                '}';
+        return "ItemCardapio{"
+                + "nome='" + nome + '\''
+                + ", preco=" + preco
+                + '}';
     }
 }
-
