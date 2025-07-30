@@ -62,12 +62,22 @@ public class ItemCardapioRepository extends Repository<ItemCardapio> {
         item.setLixo(false);
         saveOrUpdate(item);
     }
-    
+
     public void restaurarId(Long id) {
         ItemCardapio item = findById(id);
         if (item != null) {
             restaurar(item);
         }
-        
+    }
+
+    public void excluirDefinitivamente(ItemCardapio item) {
+        delete(item);
+    }
+
+    public void excluirDefinitivamenteId(Long id) {
+        ItemCardapio item = findById(id);
+        if (item != null) {
+            excluirDefinitivamente(item);
+        }
     }
 }
