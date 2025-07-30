@@ -57,6 +57,12 @@ public class ItemCardapioRepository extends Repository<ItemCardapio> {
             moverParaLixeira(item);
         }
     }
+    
+    public void moverParaLixeira(List<ItemCardapio> itens) {
+        for (ItemCardapio item : itens) {
+            moverParaLixeira(item);
+        }
+    }
 
     public void restaurar(ItemCardapio item) {
         item.setLixo(false);
