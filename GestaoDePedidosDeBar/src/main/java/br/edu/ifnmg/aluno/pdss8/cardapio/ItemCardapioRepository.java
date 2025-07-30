@@ -45,6 +45,18 @@ public class ItemCardapioRepository extends Repository<ItemCardapio> {
         }
     }
 
-    
+    // Métodos para a lixeira
+    public void moverParaLixeira(ItemCardapio item) {
+        item.setLixo(true);
+        saveOrUpdate(item);
+    }
+
+    public void moverParaLixeiraId(Long id) {
+        ItemCardapio item = findById(id);
+        if (item != null) {
+            moverParaLixeira(item);
+        }
+    }
+
     
 }
