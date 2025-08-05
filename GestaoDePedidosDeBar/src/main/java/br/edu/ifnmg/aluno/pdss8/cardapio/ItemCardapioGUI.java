@@ -35,6 +35,7 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
         btnSalvar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Cadastro de Item");
 
         txtNome.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         txtNome.setActionCommand("<Not Set>");
@@ -59,11 +60,6 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
 
         btnSalvar.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         btnSalvar.setText("Salvar");
-        btnSalvar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnSalvarMouseClicked(evt);
-            }
-        });
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalvarActionPerformed(evt);
@@ -101,9 +97,9 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlbPreco, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtPreco))
-                .addGap(84, 84, 84)
+                .addGap(18, 18, 18)
                 .addComponent(btnSalvar)
-                .addGap(32, 32, 32))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -114,7 +110,7 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -129,12 +125,15 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPrecoActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        // TODO add your handling code here:
+        String nome = txtNome.getText();
+        double preco = Double.parseDouble(txtPreco.getText());
+        
+        ItemCardapio i1 = new ItemCardapio();
+        i1.setNome(nome);
+        i1.setPreco(preco);
+        
+        new ItemCardapioRepository().saveOrUpdate(i1);
     }//GEN-LAST:event_btnSalvarActionPerformed
-
-    private void btnSalvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalvarMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSalvarMouseClicked
 
     /**
      * @param args the command line arguments
