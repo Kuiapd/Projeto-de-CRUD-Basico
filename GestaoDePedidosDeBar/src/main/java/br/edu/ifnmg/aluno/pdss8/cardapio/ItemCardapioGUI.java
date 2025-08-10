@@ -5,6 +5,7 @@
 package br.edu.ifnmg.aluno.pdss8.cardapio;
 
 import java.awt.event.ItemEvent;
+import java.util.List;
 import javax.swing.DefaultListModel;
 
 /**
@@ -56,7 +57,7 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
         radExcluidos = new javax.swing.JRadioButton();
         jlbCardapio = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        lstCardapio = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cadastro de Item");
@@ -171,8 +172,8 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
 
         jlbCardapio.setText("Cardápio");
 
-        jList1.setModel(modelCardapio);
-        jScrollPane2.setViewportView(jList1);
+        lstCardapio.setModel(modelCardapio);
+        jScrollPane2.setViewportView(lstCardapio);
 
         javax.swing.GroupLayout pnlListagemLayout = new javax.swing.GroupLayout(pnlListagem);
         pnlListagem.setLayout(pnlListagemLayout);
@@ -258,6 +259,20 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
 
     private void btnParaLixeiraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnParaLixeiraActionPerformed
 
+        if (lstCardapio.getSelectedIndices().length == 0) {
+
+        }
+        if (lstCardapio.getSelectedIndices().length == 1) {
+            ItemCardapio selected = lstCardapio.getSelectedValue();
+            repository.moverParaLixeira(selected);
+            modelCardapio.removeElement(selected);
+        } else {
+            List<ItemCardapio> selection = lstCardapio.getSelectedValuesList();
+            repository.moverParaLixeira(selection);
+            for (ItemCardapio i : selection) {
+                modelCardapio.removeElement(i);
+            }
+        }
 
     }//GEN-LAST:event_btnParaLixeiraActionPerformed
 
@@ -338,7 +353,6 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnRestaurar;
     private javax.swing.JButton btnSalvar;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JList<ItemCardapio> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -346,6 +360,7 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jlbLixeira;
     private javax.swing.JLabel jlbNome;
     private javax.swing.JLabel jlbPreco;
+    private javax.swing.JList<ItemCardapio> lstCardapio;
     private javax.swing.JPanel pnlCadastro;
     private javax.swing.JPanel pnlListagem;
     private javax.swing.JRadioButton radAtivos;
