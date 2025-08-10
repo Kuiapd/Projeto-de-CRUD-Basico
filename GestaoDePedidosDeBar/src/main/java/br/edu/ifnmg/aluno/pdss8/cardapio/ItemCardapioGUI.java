@@ -260,7 +260,7 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
     private void btnParaLixeiraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnParaLixeiraActionPerformed
 
         if (lstCardapio.getSelectedIndices().length == 0) {
-
+            
         }
         if (lstCardapio.getSelectedIndices().length == 1) {
             ItemCardapio selected = lstCardapio.getSelectedValue();
@@ -277,20 +277,41 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnParaLixeiraActionPerformed
 
     private void btnRestaurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestaurarActionPerformed
-        // TODO add your handling code here:
+        if (lstCardapio.getSelectedIndices().length == 0) {
+            
+        }
+        if (lstCardapio.getSelectedIndices().length == 1) {
+            
+        } else {
+            List<ItemCardapio> selection = lstCardapio.getSelectedValuesList();
+            
+        }
     }//GEN-LAST:event_btnRestaurarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        // TODO add your handling code here:
+        if (lstCardapio.getSelectedIndices().length == 0) {
+            
+        }
+        if (lstCardapio.getSelectedIndices().length == 1) {
+            ItemCardapio selected = lstCardapio.getSelectedValue();
+            repository.excluirDefinitivamente(selected);
+            modelCardapio.removeElement(selected);
+        } else {
+            List<ItemCardapio> selection = lstCardapio.getSelectedValuesList();
+            repository.moverParaLixeira(selection);
+            for (ItemCardapio i : selection) {
+                modelCardapio.removeElement(i);
+            }
+        }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnEsvaziarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEsvaziarActionPerformed
-        new ItemCardapioRepository().esvaziarLixeira();
+        repository.esvaziarLixeira();
     }//GEN-LAST:event_btnEsvaziarActionPerformed
 
     private void radAtivosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_radAtivosItemStateChanged
         if (evt.getStateChange() == ItemEvent.SELECTED) {
-
+            atualizarBotoes(true);
             modelCardapio.clear();
             modelCardapio.addAll(repository.findAll());
         }
@@ -298,12 +319,18 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
 
     private void radExcluidosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_radExcluidosItemStateChanged
         if (evt.getStateChange() == ItemEvent.SELECTED) {
-
+            atualizarBotoes(false);
             modelCardapio.clear();
             modelCardapio.addAll(repository.buscarTodosNaLixeira());
         }
     }//GEN-LAST:event_radExcluidosItemStateChanged
 
+    private void atualizarBotoes(boolean status) {
+        btnParaLixeira.setEnabled(status);
+        btnExcluir.setEnabled(!status);
+        btnRestaurar.setEnabled(!status);
+        btnEsvaziar.setEnabled(!status);
+    }
     /**
      * @param args the command line arguments
      */
