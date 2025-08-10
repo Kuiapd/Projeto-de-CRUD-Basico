@@ -176,8 +176,8 @@
                               <Component id="btnEsvaziar" alignment="1" min="-2" pref="195" max="-2" attributes="0"/>
                           </Group>
                           <Component id="jlbLixeira" min="-2" max="-2" attributes="0"/>
-                          <Component id="rbAtivos" min="-2" max="-2" attributes="0"/>
-                          <Component id="rbExcluidos" min="-2" max="-2" attributes="0"/>
+                          <Component id="radAtivos" min="-2" max="-2" attributes="0"/>
+                          <Component id="radExcluidos" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -188,13 +188,13 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="rbAtivos" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="radAtivos" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jlbCardapio" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Component id="rbExcluidos" min="-2" max="-2" attributes="0"/>
+                              <Component id="radExcluidos" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="btnParaLixeira" min="-2" max="-2" attributes="0"/>
                               <EmptySpace pref="89" max="32767" attributes="0"/>
@@ -269,7 +269,7 @@
                 <Property name="text" type="java.lang.String" value="Lixeira:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JRadioButton" name="rbAtivos">
+            <Component class="javax.swing.JRadioButton" name="radAtivos">
               <Properties>
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="buttonGroup1"/>
@@ -277,14 +277,20 @@
                 <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="N&#xe3;o Exclu&#xed;dos"/>
               </Properties>
+              <Events>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="radAtivosItemStateChanged"/>
+              </Events>
             </Component>
-            <Component class="javax.swing.JRadioButton" name="rbExcluidos">
+            <Component class="javax.swing.JRadioButton" name="radExcluidos">
               <Properties>
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="buttonGroup1"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Exclu&#xed;dos"/>
               </Properties>
+              <Events>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="radExcluidosItemStateChanged"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jlbCardapio">
               <Properties>

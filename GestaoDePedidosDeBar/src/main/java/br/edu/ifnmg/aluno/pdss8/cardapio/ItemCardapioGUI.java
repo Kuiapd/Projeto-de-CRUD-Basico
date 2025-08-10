@@ -4,6 +4,7 @@
  */
 package br.edu.ifnmg.aluno.pdss8.cardapio;
 
+import java.awt.event.ItemEvent;
 import javax.swing.DefaultListModel;
 
 /**
@@ -14,19 +15,18 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
 
     private DefaultListModel<ItemCardapio> modelCardapio;
     private ItemCardapioRepository repository;
-    
+
     /**
      * Creates new form NewJFrame
      */
     public ItemCardapioGUI() {
-        
+
         repository = new ItemCardapioRepository();
         modelCardapio = new DefaultListModel<>();
         modelCardapio.addAll(repository.findAll());
-        
+
         initComponents();
-        
-        
+
     }
 
     /**
@@ -52,8 +52,8 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
         btnExcluir = new javax.swing.JButton();
         btnEsvaziar = new javax.swing.JButton();
         jlbLixeira = new javax.swing.JLabel();
-        rbAtivos = new javax.swing.JRadioButton();
-        rbExcluidos = new javax.swing.JRadioButton();
+        radAtivos = new javax.swing.JRadioButton();
+        radExcluidos = new javax.swing.JRadioButton();
         jlbCardapio = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
@@ -152,12 +152,22 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
         jlbLixeira.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jlbLixeira.setText("Lixeira:");
 
-        buttonGroup1.add(rbAtivos);
-        rbAtivos.setSelected(true);
-        rbAtivos.setText("Não Excluídos");
+        buttonGroup1.add(radAtivos);
+        radAtivos.setSelected(true);
+        radAtivos.setText("Não Excluídos");
+        radAtivos.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                radAtivosItemStateChanged(evt);
+            }
+        });
 
-        buttonGroup1.add(rbExcluidos);
-        rbExcluidos.setText("Excluídos");
+        buttonGroup1.add(radExcluidos);
+        radExcluidos.setText("Excluídos");
+        radExcluidos.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                radExcluidosItemStateChanged(evt);
+            }
+        });
 
         jlbCardapio.setText("Cardápio");
 
@@ -182,8 +192,8 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
                             .addComponent(btnExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addComponent(btnEsvaziar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jlbLixeira)
-                    .addComponent(rbAtivos)
-                    .addComponent(rbExcluidos))
+                    .addComponent(radAtivos)
+                    .addComponent(radExcluidos))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlListagemLayout.setVerticalGroup(
@@ -191,12 +201,12 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
             .addGroup(pnlListagemLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlListagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rbAtivos)
+                    .addComponent(radAtivos)
                     .addComponent(jlbCardapio))
                 .addGap(3, 3, 3)
                 .addGroup(pnlListagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlListagemLayout.createSequentialGroup()
-                        .addComponent(rbExcluidos)
+                        .addComponent(radExcluidos)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnParaLixeira)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
@@ -247,8 +257,8 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnParaLixeiraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnParaLixeiraActionPerformed
-        
-        
+
+
     }//GEN-LAST:event_btnParaLixeiraActionPerformed
 
     private void btnRestaurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestaurarActionPerformed
@@ -262,6 +272,22 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
     private void btnEsvaziarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEsvaziarActionPerformed
         new ItemCardapioRepository().esvaziarLixeira();
     }//GEN-LAST:event_btnEsvaziarActionPerformed
+
+    private void radAtivosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_radAtivosItemStateChanged
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+
+            modelCardapio.clear();
+            modelCardapio.addAll(repository.findAll());
+        }
+    }//GEN-LAST:event_radAtivosItemStateChanged
+
+    private void radExcluidosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_radExcluidosItemStateChanged
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+
+            modelCardapio.clear();
+            modelCardapio.addAll(repository.buscarTodosNaLixeira());
+        }
+    }//GEN-LAST:event_radExcluidosItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -322,8 +348,8 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jlbPreco;
     private javax.swing.JPanel pnlCadastro;
     private javax.swing.JPanel pnlListagem;
-    private javax.swing.JRadioButton rbAtivos;
-    private javax.swing.JRadioButton rbExcluidos;
+    private javax.swing.JRadioButton radAtivos;
+    private javax.swing.JRadioButton radExcluidos;
     private javax.swing.JTabbedPane tabPrincipal;
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextField txtPreco;
