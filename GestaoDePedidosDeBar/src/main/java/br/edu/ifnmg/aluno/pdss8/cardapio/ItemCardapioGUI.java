@@ -4,17 +4,29 @@
  */
 package br.edu.ifnmg.aluno.pdss8.cardapio;
 
+import javax.swing.DefaultListModel;
+
 /**
  *
  * @author IFNMG
  */
-public class ItemCardapioCadastro extends javax.swing.JFrame {
+public class ItemCardapioGUI extends javax.swing.JFrame {
 
+    private DefaultListModel<ItemCardapio> modelCardapio;
+    private ItemCardapioRepository repository;
+    
     /**
      * Creates new form NewJFrame
      */
-    public ItemCardapioCadastro() {
+    public ItemCardapioGUI() {
+        
+        repository = new ItemCardapioRepository();
+        modelCardapio = new DefaultListModel<>();
+        modelCardapio.addAll(repository.findAll());
+        
         initComponents();
+        
+        
     }
 
     /**
@@ -40,10 +52,11 @@ public class ItemCardapioCadastro extends javax.swing.JFrame {
         btnExcluir = new javax.swing.JButton();
         btnEsvaziar = new javax.swing.JButton();
         jlbLixeira = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
         rbAtivos = new javax.swing.JRadioButton();
         rbExcluidos = new javax.swing.JRadioButton();
+        jlbCardapio = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cadastro de Item");
@@ -139,13 +152,6 @@ public class ItemCardapioCadastro extends javax.swing.JFrame {
         jlbLixeira.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jlbLixeira.setText("Lixeira:");
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(jList1);
-
         buttonGroup1.add(rbAtivos);
         rbAtivos.setSelected(true);
         rbAtivos.setText("Não Excluídos");
@@ -153,14 +159,21 @@ public class ItemCardapioCadastro extends javax.swing.JFrame {
         buttonGroup1.add(rbExcluidos);
         rbExcluidos.setText("Excluídos");
 
+        jlbCardapio.setText("Cardápio");
+
+        jList1.setModel(modelCardapio);
+        jScrollPane2.setViewportView(jList1);
+
         javax.swing.GroupLayout pnlListagemLayout = new javax.swing.GroupLayout(pnlListagem);
         pnlListagem.setLayout(pnlListagemLayout);
         pnlListagemLayout.setHorizontalGroup(
             pnlListagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlListagemLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGroup(pnlListagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jlbCardapio)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlListagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlListagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(pnlListagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -177,23 +190,27 @@ public class ItemCardapioCadastro extends javax.swing.JFrame {
             pnlListagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlListagemLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlListagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(pnlListagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rbAtivos)
+                    .addComponent(jlbCardapio))
+                .addGap(3, 3, 3)
+                .addGroup(pnlListagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlListagemLayout.createSequentialGroup()
-                        .addComponent(rbAtivos)
-                        .addGap(3, 3, 3)
                         .addComponent(rbExcluidos)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnParaLixeira)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
                         .addComponent(jlbLixeira)
                         .addGap(18, 18, 18)
                         .addComponent(btnRestaurar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnExcluir)
                         .addGap(7, 7, 7)
-                        .addComponent(btnEsvaziar))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(9, Short.MAX_VALUE))
+                        .addComponent(btnEsvaziar)
+                        .addGap(9, 9, 9))
+                    .addGroup(pnlListagemLayout.createSequentialGroup()
+                        .addComponent(jScrollPane2)
+                        .addContainerGap())))
         );
 
         tabPrincipal.addTab("Listagem", pnlListagem);
@@ -218,6 +235,7 @@ public class ItemCardapioCadastro extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        repository = new ItemCardapioRepository();
         String nome = txtNome.getText();
         double preco = Double.parseDouble(txtPreco.getText());
 
@@ -225,7 +243,7 @@ public class ItemCardapioCadastro extends javax.swing.JFrame {
         i1.setNome(nome);
         i1.setPreco(preco);
 
-        new ItemCardapioRepository().saveOrUpdate(i1);
+        repository.saveOrUpdate(i1);
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnParaLixeiraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnParaLixeiraActionPerformed
@@ -262,14 +280,18 @@ public class ItemCardapioCadastro extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ItemCardapioCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ItemCardapioGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ItemCardapioCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ItemCardapioGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ItemCardapioCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ItemCardapioGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ItemCardapioCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ItemCardapioGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -278,7 +300,7 @@ public class ItemCardapioCadastro extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ItemCardapioCadastro().setVisible(true);
+                new ItemCardapioGUI().setVisible(true);
             }
         });
     }
@@ -290,8 +312,11 @@ public class ItemCardapioCadastro extends javax.swing.JFrame {
     private javax.swing.JButton btnRestaurar;
     private javax.swing.JButton btnSalvar;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JList<String> jList1;
+    private javax.swing.JList<ItemCardapio> jList1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel jlbCardapio;
     private javax.swing.JLabel jlbLixeira;
     private javax.swing.JLabel jlbNome;
     private javax.swing.JLabel jlbPreco;
