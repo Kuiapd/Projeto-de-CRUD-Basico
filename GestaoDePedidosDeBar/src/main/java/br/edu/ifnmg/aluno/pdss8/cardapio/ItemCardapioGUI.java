@@ -260,7 +260,7 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
     private void btnParaLixeiraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnParaLixeiraActionPerformed
 
         if (lstCardapio.getSelectedIndices().length == 0) {
-            
+
         }
         if (lstCardapio.getSelectedIndices().length == 1) {
             ItemCardapio selected = lstCardapio.getSelectedValue();
@@ -278,30 +278,23 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
 
     private void btnRestaurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestaurarActionPerformed
         if (lstCardapio.getSelectedIndices().length == 0) {
-            
+
         }
         if (lstCardapio.getSelectedIndices().length == 1) {
-            
-        } else {
-            List<ItemCardapio> selection = lstCardapio.getSelectedValuesList();
-            
+            ItemCardapio selected = lstCardapio.getSelectedValue();
+            repository.restaurar(selected);
+            modelCardapio.removeElement(selected);
         }
     }//GEN-LAST:event_btnRestaurarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         if (lstCardapio.getSelectedIndices().length == 0) {
-            
+
         }
         if (lstCardapio.getSelectedIndices().length == 1) {
             ItemCardapio selected = lstCardapio.getSelectedValue();
             repository.excluirDefinitivamente(selected);
             modelCardapio.removeElement(selected);
-        } else {
-            List<ItemCardapio> selection = lstCardapio.getSelectedValuesList();
-            repository.moverParaLixeira(selection);
-            for (ItemCardapio i : selection) {
-                modelCardapio.removeElement(i);
-            }
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
@@ -331,6 +324,7 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
         btnRestaurar.setEnabled(!status);
         btnEsvaziar.setEnabled(!status);
     }
+
     /**
      * @param args the command line arguments
      */
