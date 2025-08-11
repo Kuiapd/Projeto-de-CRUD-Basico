@@ -7,6 +7,7 @@ package br.edu.ifnmg.aluno.pdss8.cardapio;
 import java.awt.event.ItemEvent;
 import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.Timer;
 
 /**
  *
@@ -27,6 +28,8 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
         modelCardapio.addAll(repository.findAll());
 
         initComponents();
+        
+        lblAlerta.setVisible(false); 
 
     }
 
@@ -58,6 +61,7 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
         jlbCardapio = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         lstCardapio = new javax.swing.JList<>();
+        lblAlerta = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cadastro de Item");
@@ -175,16 +179,28 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
         lstCardapio.setModel(modelCardapio);
         jScrollPane2.setViewportView(lstCardapio);
 
+        lblAlerta.setBackground(new java.awt.Color(255, 255, 0));
+        lblAlerta.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblAlerta.setForeground(new java.awt.Color(255, 0, 0));
+        lblAlerta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblAlerta.setText("Selecione um Item");
+        lblAlerta.setOpaque(true);
+
         javax.swing.GroupLayout pnlListagemLayout = new javax.swing.GroupLayout(pnlListagem);
         pnlListagem.setLayout(pnlListagemLayout);
         pnlListagemLayout.setHorizontalGroup(
             pnlListagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlListagemLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlListagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jlbCardapio)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlListagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(pnlListagemLayout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(pnlListagemLayout.createSequentialGroup()
+                        .addComponent(jlbCardapio)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblAlerta, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(36, 36, 36)))
                 .addGroup(pnlListagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlListagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(pnlListagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -203,14 +219,15 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnlListagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(radAtivos)
-                    .addComponent(jlbCardapio))
+                    .addComponent(jlbCardapio)
+                    .addComponent(lblAlerta))
                 .addGap(3, 3, 3)
                 .addGroup(pnlListagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlListagemLayout.createSequentialGroup()
                         .addComponent(radExcluidos)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnParaLixeira)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
                         .addComponent(jlbLixeira)
                         .addGap(18, 18, 18)
                         .addComponent(btnRestaurar)
@@ -255,12 +272,13 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
         i1.setPreco(preco);
 
         repository.saveOrUpdate(i1);
+        clearFields();
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnParaLixeiraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnParaLixeiraActionPerformed
 
         if (lstCardapio.getSelectedIndices().length == 0) {
-
+            showWarning("Selecione ao menos um item");
         }
         if (lstCardapio.getSelectedIndices().length == 1) {
             ItemCardapio selected = lstCardapio.getSelectedValue();
@@ -278,7 +296,7 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
 
     private void btnRestaurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestaurarActionPerformed
         if (lstCardapio.getSelectedIndices().length == 0) {
-
+            showWarning("Selecione um item");
         }
         if (lstCardapio.getSelectedIndices().length == 1) {
             ItemCardapio selected = lstCardapio.getSelectedValue();
@@ -289,7 +307,7 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         if (lstCardapio.getSelectedIndices().length == 0) {
-
+            showWarning("Selecione um item");
         }
         if (lstCardapio.getSelectedIndices().length == 1) {
             ItemCardapio selected = lstCardapio.getSelectedValue();
@@ -325,6 +343,24 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
         btnEsvaziar.setEnabled(!status);
     }
 
+    private void showWarning(String warning) {
+        lblAlerta.setText(warning);
+        lblAlerta.setVisible(true);
+        
+        Timer timer = new Timer(4000, (e) -> {
+            lblAlerta.setVisible(false);
+            ((Timer) e.getSource()).stop();
+        });
+        timer.setRepeats(false);
+        timer.start();
+    }
+    
+    private void clearFields() {
+        txtNome.setText(null);
+        txtPreco.setText(null);
+        txtNome.requestFocus();
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -379,6 +415,7 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jlbLixeira;
     private javax.swing.JLabel jlbNome;
     private javax.swing.JLabel jlbPreco;
+    private javax.swing.JLabel lblAlerta;
     private javax.swing.JList<ItemCardapio> lstCardapio;
     private javax.swing.JPanel pnlCadastro;
     private javax.swing.JPanel pnlListagem;
