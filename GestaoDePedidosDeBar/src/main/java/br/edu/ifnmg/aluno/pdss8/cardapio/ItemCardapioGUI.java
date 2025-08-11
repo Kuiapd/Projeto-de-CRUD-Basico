@@ -366,7 +366,7 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
             }
         });
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEsvaziar;
     private javax.swing.JButton btnExcluir;
@@ -374,9 +374,7 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnRestaurar;
     private javax.swing.JButton btnSalvar;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel jlbCardapio;
     private javax.swing.JLabel jlbLixeira;
     private javax.swing.JLabel jlbNome;

@@ -66,15 +66,17 @@ public class ItemCardapioRepository extends Repository<ItemCardapio> {
 
     public List<ItemCardapio> buscarTodosNaLixeira() {
         try (var em = DataSourceFactory.getEntityManager()) {
-            return em.createNamedQuery("SELECT i FROM ItemCardapio i WHERE"
-                    + " i.Lixo = true", ItemCardapio.class).getResultList();
+            return em.createQuery(
+                    "SELECT i FROM ItemCardapio i WHERE i.lixo = true",
+                    ItemCardapio.class).getResultList();
         }
     }
     
     public ItemCardapio buscarNaLixeiraId(Long id) {
         try (var em = DataSourceFactory.getEntityManager()) {
-            return em.createQuery("SELECT i FROM ItemCardapio i WHERE "
-                    + "i.id = :id AND i.Lixo = true", ItemCardapio.class)
+            return em.createQuery(
+                    "SELECT i FROM ItemCardapio i WHERE i.id = :id AND i.lixo = true",
+                    ItemCardapio.class)
                     .setParameter("id", id).getSingleResult();
         } catch (Exception e) {
             return null;
@@ -107,7 +109,7 @@ public class ItemCardapioRepository extends Repository<ItemCardapio> {
     public void esvaziarLixeira() {
         try (var em = DataSourceFactory.getEntityManager()) {
             em.getTransaction().begin();
-            em.createQuery("DELETE FROM ItemCardapio i WHERE i.Lixo = true")
+            em.createQuery("DELETE FROM ItemCardapio i WHERE i.lixo = true")
                     .executeUpdate();
             em.getTransaction().commit();
         } catch (Exception e) {
