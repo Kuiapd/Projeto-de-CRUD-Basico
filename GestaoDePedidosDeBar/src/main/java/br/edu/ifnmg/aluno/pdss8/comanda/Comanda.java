@@ -1,13 +1,11 @@
 package br.edu.ifnmg.aluno.pdss8.comanda;
 
+import br.edu.ifnmg.aluno.iro.mesa.Mesa;
 import br.edu.ifnmg.aluno.iro.pedido.Pedido;
+import br.edu.ifnmg.aluno.iro.mesa.Mesa;
+import br.edu.ifnmg.aluno.pdss8.funcionario.Funcionario;
 import io.github.guisso.javasepersistencewithhibernateorm.beta.repository.ProjectEntity;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +14,13 @@ import java.util.List;
 @Table(name = "comanda")
 public class Comanda extends ProjectEntity implements Serializable {
 
-    @Column(nullable = false, unique = true)
-    private int numeroMesa;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mesa_id", nullable = false)
+    private Mesa mesa;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "funcionario_id", nullable = false)
+    private Funcionario funcionario;  // quem abriu a comanda
 
     @Column(nullable = false)
     private boolean pago = false;
@@ -25,26 +28,17 @@ public class Comanda extends ProjectEntity implements Serializable {
     @OneToMany(mappedBy = "comanda", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Pedido> pedidos = new ArrayList<>();
 
-    // Getters e Setters
-    public int getNumeroMesa() {
-        return numeroMesa;
-    }
+    // Getters e setters
+    public Mesa getMesa() { return mesa; }
+    public void setMesa(Mesa mesa) { this.mesa = mesa; }
 
-    public void setNumeroMesa(int numeroMesa) {
-        this.numeroMesa = numeroMesa;
-    }
+    public Funcionario getFuncionario() { return funcionario; }
+    public void setFuncionario(Funcionario funcionario) { this.funcionario = funcionario; }
 
-    public boolean isPago() {
-        return pago;
-    }
+    public boolean isPago() { return pago; }
+    public void setPago(boolean pago) { this.pago = pago; }
 
-    public void setPago(boolean pago) {
-        this.pago = pago;
-    }
-
-    public List<Pedido> getPedidos() {
-        return pedidos;
-    }
+    public List<Pedido> getPedidos() { return pedidos; }
 
     public void adicionarPedido(Pedido pedido) {
         pedido.setComanda(this);
@@ -65,10 +59,14 @@ public class Comanda extends ProjectEntity implements Serializable {
     @Override
     public String toString() {
         return "Comanda{" +
-                "id=" + getId() + // herdado de ProjectEntity
-                ", numeroMesa=" + numeroMesa +
+                "id=" + getId() +
+                ", mesa=" + (mesa != null ? mesa.getNumero() : "null") +
+                ", funcionario=" + (funcionario != null ? funcionario.getNome() : "null") +
                 ", pago=" + pago +
                 ", pedidos=" + pedidos +
                 '}';
     }
+
+    
 }
+

@@ -8,17 +8,22 @@ import br.edu.ifnmg.aluno.pdss8.comanda.Comanda;
 import br.edu.ifnmg.aluno.pdss8.comanda.ComandaRepository;
 import br.edu.ifnmg.aluno.iro.pedido.Pedido;
 import br.edu.ifnmg.aluno.iro.pedido.PedidoRepository;
-
+import br.edu.ifnmg.aluno.iro.mesa.Mesa;
+import br.edu.ifnmg.aluno.iro.mesa.MesaRepository;
+import br.edu.ifnmg.aluno.pdss8.funcionario.Funcionario;
 /**
  *
  * @author PABLO DANIEL
  */
+
 public class Atendimento {
 
     private final ComandaRepository comandaRepo = new ComandaRepository();
     private final PedidoRepository pedidoRepo = new PedidoRepository();
+    private final MesaRepository mesaRepo = new MesaRepository();
 
-    public void registrarPedido(Comanda comanda, Pedido pedido) {
+    public void registrarPedido(Comanda comanda, Pedido pedido, Funcionario funcionario) {
+        pedido.setFuncionario(funcionario);
         comanda.adicionarPedido(pedido);
         pedido.setComanda(comanda);
 
@@ -35,7 +40,22 @@ public class Atendimento {
         comanda.setPago(true);
         comandaRepo.saveOrUpdate(comanda);
 
-        // Deleta a comanda do banco ao pagar
+        Mesa mesa = comanda.getMesa();
+        mesa.setOcupada(false);
+        mesaRepo.saveOrUpdate(mesa);
+
         comandaRepo.delete(comanda);
+    }
+
+    public Comanda abrirComanda(Mesa mesa, Funcionario funcionario) {
+        mesa.setOcupada(true);
+        mesaRepo.saveOrUpdate(mesa);
+
+        Comanda comanda = new Comanda();
+        comanda.setMesa(mesa);
+        comanda.setFuncionario(funcionario);
+        comandaRepo.saveOrUpdate(comanda);
+
+        return comanda;
     }
 }

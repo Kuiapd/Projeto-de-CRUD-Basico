@@ -18,14 +18,12 @@ package br.edu.ifnmg.aluno.iro.pedido;
 
 import br.edu.ifnmg.aluno.pdss8.cardapio.ItemCardapio;
 import br.edu.ifnmg.aluno.pdss8.comanda.Comanda;
-import br.edu.ifnmg.aluno.pdss8.cardapio.ItemCardapio;
+import br.edu.ifnmg.aluno.pdss8.funcionario.Funcionario;
 import io.github.guisso.javasepersistencewithhibernateorm.beta.repository.ProjectEntity;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
-
 
 @Entity
 @Table(name = "pedido")
@@ -35,23 +33,24 @@ public class Pedido extends ProjectEntity implements Serializable {
     @JoinColumn(name = "comanda_id", nullable = false)
     private Comanda comanda;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "funcionario_id", nullable = false)
+    private Funcionario funcionario;  // quem registrou o pedido
+
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "pedido_itens", joinColumns = @JoinColumn(name = "pedido_id"))
     @MapKeyJoinColumn(name = "item_cardapio_id")
     @Column(name = "quantidade")
     private Map<ItemCardapio, Integer> itens = new HashMap<>();
 
-    public Comanda getComanda() {
-        return comanda;
-    }
+    // Getters e setters
+    public Comanda getComanda() { return comanda; }
+    public void setComanda(Comanda comanda) { this.comanda = comanda; }
 
-    public void setComanda(Comanda comanda) {
-        this.comanda = comanda;
-    }
+    public Funcionario getFuncionario() { return funcionario; }
+    public void setFuncionario(Funcionario funcionario) { this.funcionario = funcionario; }
 
-    public Map<ItemCardapio, Integer> getItens() {
-        return itens;
-    }
+    public Map<ItemCardapio, Integer> getItens() { return itens; }
 
     public void adicionarItem(ItemCardapio item, int quantidade) {
         if (itens == null) {
@@ -59,7 +58,6 @@ public class Pedido extends ProjectEntity implements Serializable {
         }
         itens.put(item, itens.getOrDefault(item, 0) + quantidade);
     }
-
 
     public double calcularSubtotal() {
         return itens.entrySet().stream()
@@ -70,7 +68,8 @@ public class Pedido extends ProjectEntity implements Serializable {
     @Override
     public String toString() {
         return "Pedido{" +
-                "mesa=" + (comanda != null ? comanda.getNumeroMesa() : "null") +
+                "mesa=" + (comanda != null ? comanda.getMesa().getNumero() : "null") +
+                ", funcionario=" + (funcionario != null ? funcionario.getNome() : "null") +
                 ", itens=" + itens +
                 '}';
     }

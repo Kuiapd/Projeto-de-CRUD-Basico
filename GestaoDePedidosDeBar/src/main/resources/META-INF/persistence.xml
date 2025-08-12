@@ -5,6 +5,8 @@
     <class>br.edu.ifnmg.aluno.pdss8.comanda.Comanda</class>
     <class>br.edu.ifnmg.aluno.iro.pedido.Pedido</class>
     <class>br.edu.ifnmg.aluno.pdss8.cardapio.ItemCardapio</class>
+    <class>br.edu.ifnmg.aluno.iro.mesa.Mesa</class>
+    <class>br.edu.ifnmg.aluno.pdss8.funcionario.Funcionario</class>
     <properties>
       <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1:3306/gestaodepedidos?zeroDateTimeBehavior=CONVERT_TO_NULL&amp;connectTimeout=5000&amp;socketTimeout=10000&amp;useSSL=false&amp;serverTimezone=America/Fortaleza&amp;useUnicode=true&amp;characterEncoding=UTF-8"/>
       <property name="jakarta.persistence.jdbc.user" value="root"/>
