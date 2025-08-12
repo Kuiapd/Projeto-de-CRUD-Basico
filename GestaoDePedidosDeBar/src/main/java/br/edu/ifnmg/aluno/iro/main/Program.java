@@ -157,13 +157,11 @@ public class Program {
         Funcionario func1 = new Funcionario();
         func1.setNome("Ana Beatriz");
         func1.setCpf("123.456.789-00");
-        func1.setDataNascimento(LocalDate.of(1990, 5, 12));
         funcionarioRepo.saveOrUpdate(func1);
 
         Funcionario func2 = new Funcionario();
         func2.setNome("Carlos Silva");
         func2.setCpf("987.654.321-00");
-        func2.setDataNascimento(LocalDate.of(1985, 8, 22));
         funcionarioRepo.saveOrUpdate(func2);
 
         System.out.println("Funcionários criados e salvos.");
