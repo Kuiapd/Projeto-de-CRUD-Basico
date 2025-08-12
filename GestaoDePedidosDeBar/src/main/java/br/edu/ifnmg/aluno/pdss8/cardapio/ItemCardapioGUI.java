@@ -28,8 +28,8 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
         modelCardapio.addAll(repository.findAll());
 
         initComponents();
-        
-        lblAlerta.setVisible(false); 
+
+        lblAlerta.setVisible(false);
 
     }
 
@@ -158,6 +158,7 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
         jlbLixeira.setText("Lixeira:");
 
         buttonGroup1.add(radAtivos);
+        radAtivos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         radAtivos.setSelected(true);
         radAtivos.setText("Não Excluídos");
         radAtivos.addItemListener(new java.awt.event.ItemListener() {
@@ -167,6 +168,7 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
         });
 
         buttonGroup1.add(radExcluidos);
+        radExcluidos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         radExcluidos.setText("Excluídos");
         radExcluidos.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -174,8 +176,10 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
             }
         });
 
+        jlbCardapio.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jlbCardapio.setText("Cardápio");
 
+        lstCardapio.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lstCardapio.setModel(modelCardapio);
         jScrollPane2.setViewportView(lstCardapio);
 
@@ -227,7 +231,7 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
                         .addComponent(radExcluidos)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnParaLixeira)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
                         .addComponent(jlbLixeira)
                         .addGap(18, 18, 18)
                         .addComponent(btnRestaurar)
@@ -346,7 +350,7 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
     private void showWarning(String warning) {
         lblAlerta.setText(warning);
         lblAlerta.setVisible(true);
-        
+
         Timer timer = new Timer(4000, (e) -> {
             lblAlerta.setVisible(false);
             ((Timer) e.getSource()).stop();
@@ -354,13 +358,13 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
         timer.setRepeats(false);
         timer.start();
     }
-    
+
     private void clearFields() {
         txtNome.setText(null);
         txtPreco.setText(null);
         txtNome.requestFocus();
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -402,7 +406,7 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
             }
         });
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEsvaziar;
     private javax.swing.JButton btnExcluir;
