@@ -58,9 +58,7 @@ public class Program {
 
         // Pedido para comanda 1
         Pedido pedido1 = new Pedido();
-        pedido1.setComanda(comanda1);
-        pedido1.adicionarItem(pizza, 2);
-        pedido1.adicionarItem(refri, 3);
+        pedido1.setComanda("1");
         pedidoRepo.saveOrUpdate(pedido1);
 
         comanda1.adicionarPedido(pedido1);
@@ -68,9 +66,7 @@ public class Program {
 
         // Pedido para comanda 2
         Pedido pedido2 = new Pedido();
-        pedido2.setComanda(comanda2);
-        pedido2.adicionarItem(cerveja, 4);
-        pedido2.adicionarItem(refri, 2);
+        pedido2.setComanda("2");
         pedidoRepo.saveOrUpdate(pedido2);
 
         comanda2.adicionarPedido(pedido2);
@@ -80,16 +76,6 @@ public class Program {
 
         System.out.println("\n=== MOSTRANDO PEDIDOS DA MESA 1 ===");
         Comanda c1 = comandaRepo.findByNumeroMesa(1);
-        System.out.println("Mesa " + c1.getNumeroMesa() + ":");
-        for (Pedido p : c1.getPedidos()) {
-            System.out.println(" Pedido #" + p.getId());
-            for (Map.Entry<ItemCardapio, Integer> entry : p.getItens().entrySet()) {
-                System.out.println("  - " + entry.getKey().getNome() + ": " + entry.getValue() + "x R$" + entry.getKey().getPreco());
-            }
-            System.out.printf(" Subtotal pedido: R$ %.2f%n", p.calcularSubtotal());
-        }
-        System.out.printf("Total da mesa: R$ %.2f%n", c1.calcularTotal());
-
         System.out.println("\n=== BUSCANDO ITENS DO CARDÁPIO POR NOME (contém 'refri') ===");
         List<ItemCardapio> encontrados = itemRepo.findByNomeContaining("refri");
         for (ItemCardapio ic : encontrados) {
@@ -123,14 +109,6 @@ public class Program {
             System.out.println("Mesa " + com.getNumeroMesa() + " - Pago? " + com.isPago());
         }
 
-        System.out.println("\n=== BUSCANDO PEDIDOS PELA COMANDA DA MESA 2 ===");
-        List<Pedido> pedidosMesa2 = pedidoRepo.findByComandaId(comanda2.getId());
-        for (Pedido p : pedidosMesa2) {
-            System.out.println("Pedido #" + p.getId() + " da mesa " + p.getComanda().getNumeroMesa());
-            for (Map.Entry<ItemCardapio, Integer> e : p.getItens().entrySet()) {
-                System.out.println(" - " + e.getKey().getNome() + ": " + e.getValue());
-            }
-        }
 
         // Repositórios para Mesa e Funcionário
         MesaRepository mesaRepo = new MesaRepository();
