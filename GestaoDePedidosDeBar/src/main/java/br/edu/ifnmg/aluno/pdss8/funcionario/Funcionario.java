@@ -23,6 +23,7 @@ public class Funcionario extends ProjectEntity implements Serializable {
     @Column(nullable = false)
     private LocalDate dataNascimento;
 
+    private boolean lixo = false;
     // Getters e Setters
     public String getNome() {
         return nome;
@@ -46,6 +47,14 @@ public class Funcionario extends ProjectEntity implements Serializable {
 
     public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
+    }
+    
+    public boolean isLixo() {
+        return lixo;
+    }
+
+    public void setLixo(boolean lixo) {
+        this.lixo = lixo;
     }
 
     @Override

@@ -42,4 +42,78 @@ public class FuncionarioRepository extends Repository<Funcionario> {
                     .getResultList();
         }
     }
+    
+     // Métodos para a lixeira
+
+    public void moverParaLixeira(Funcionario funcionario) {
+        funcionario.setLixo(true);
+        saveOrUpdate(funcionario);
+    }
+
+    public void moverParaLixeiraId(Long id) {
+        Funcionario funcionario = findById(id);
+        if (funcionario != null) {
+            moverParaLixeira(funcionario);
+        }
+    }
+
+    public void moverParaLixeira(List<Funcionario> funcionarios) {
+        for (Funcionario funcionario : funcionarios) {
+            moverParaLixeira(funcionario);
+        }
+    }
+
+    public List<Funcionario> buscarTodosNaLixeira() {
+        try (var em = DataSourceFactory.getEntityManager()) {
+            return em.createQuery(
+                    "SELECT f FROM Funcionario f WHERE f.lixo = true",
+                    Funcionario.class).getResultList();
+        }
+    }
+
+    public Funcionario buscarNaLixeiraId(Long id) {
+        try (var em = DataSourceFactory.getEntityManager()) {
+            return em.createQuery(
+                    "SELECT f FROM Funcionario f WHERE f.id = :id AND f.lixo = true",
+                    Funcionario.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public void restaurar(Funcionario funcionario) {
+        funcionario.setLixo(false);
+        saveOrUpdate(funcionario);
+    }
+
+    public void restaurarId(Long id) {
+        Funcionario funcionario = findById(id);
+        if (funcionario != null) {
+            restaurar(funcionario);
+        }
+    }
+
+    public void excluirDefinitivamente(Funcionario funcionario) {
+        delete(funcionario);
+    }
+
+    public void excluirDefinitivamenteId(Long id) {
+        Funcionario funcionario = findById(id);
+        if (funcionario != null) {
+            excluirDefinitivamente(funcionario);
+        }
+    }
+
+    public void esvaziarLixeira() {
+        try (var em = DataSourceFactory.getEntityManager()) {
+            em.getTransaction().begin();
+            em.createQuery("DELETE FROM Funcionario f WHERE f.lixo = true")
+                    .executeUpdate();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

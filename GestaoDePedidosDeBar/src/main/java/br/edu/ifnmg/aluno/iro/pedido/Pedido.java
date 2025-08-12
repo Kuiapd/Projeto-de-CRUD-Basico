@@ -26,7 +26,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-
 @Entity
 @Table(name = "pedido")
 public class Pedido extends ProjectEntity implements Serializable {
@@ -40,6 +39,7 @@ public class Pedido extends ProjectEntity implements Serializable {
     @MapKeyJoinColumn(name = "item_cardapio_id")
     @Column(name = "quantidade")
     private Map<ItemCardapio, Integer> itens = new HashMap<>();
+    private boolean lixo = false;
 
     public Comanda getComanda() {
         return comanda;
@@ -60,18 +60,25 @@ public class Pedido extends ProjectEntity implements Serializable {
         itens.put(item, itens.getOrDefault(item, 0) + quantidade);
     }
 
-
     public double calcularSubtotal() {
         return itens.entrySet().stream()
                 .mapToDouble(e -> e.getKey().getPreco() * e.getValue())
                 .sum();
     }
+    
+    public boolean isLixo() {
+        return lixo;
+    }
+
+    public void setLixo(boolean lixo) {
+        this.lixo = lixo;
+    }
 
     @Override
     public String toString() {
-        return "Pedido{" +
-                "mesa=" + (comanda != null ? comanda.getNumeroMesa() : "null") +
-                ", itens=" + itens +
-                '}';
+        return "Pedido{"
+                + "mesa=" + (comanda != null ? comanda.getNumeroMesa() : "null")
+                + ", itens=" + itens
+                + '}';
     }
 }

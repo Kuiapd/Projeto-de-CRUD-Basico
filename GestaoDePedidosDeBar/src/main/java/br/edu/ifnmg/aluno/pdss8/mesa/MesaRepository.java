@@ -61,4 +61,78 @@ public class MesaRepository extends Repository<Mesa> {
                     .getResultList();
         }
     }
+    
+    // Métodos para a lixeira
+
+    public void moverParaLixeira(Mesa mesa) {
+        mesa.setLixo(true);
+        saveOrUpdate(mesa);
+    }
+
+    public void moverParaLixeiraId(Long id) {
+        Mesa mesa = findById(id);
+        if (mesa != null) {
+            moverParaLixeira(mesa);
+        }
+    }
+
+    public void moverParaLixeira(List<Mesa> mesas) {
+        for (Mesa mesa : mesas) {
+            moverParaLixeira(mesa);
+        }
+    }
+
+    public List<Mesa> buscarTodosNaLixeira() {
+        try (var em = DataSourceFactory.getEntityManager()) {
+            return em.createQuery(
+                    "SELECT m FROM Mesa m WHERE m.lixo = true",
+                    Mesa.class).getResultList();
+        }
+    }
+
+    public Mesa buscarNaLixeiraId(Long id) {
+        try (var em = DataSourceFactory.getEntityManager()) {
+            return em.createQuery(
+                    "SELECT m FROM Mesa m WHERE m.id = :id AND m.lixo = true",
+                    Mesa.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public void restaurar(Mesa mesa) {
+        mesa.setLixo(false);
+        saveOrUpdate(mesa);
+    }
+
+    public void restaurarId(Long id) {
+        Mesa mesa = findById(id);
+        if (mesa != null) {
+            restaurar(mesa);
+        }
+    }
+
+    public void excluirDefinitivamente(Mesa mesa) {
+        delete(mesa);
+    }
+
+    public void excluirDefinitivamenteId(Long id) {
+        Mesa mesa = findById(id);
+        if (mesa != null) {
+            excluirDefinitivamente(mesa);
+        }
+    }
+
+    public void esvaziarLixeira() {
+        try (var em = DataSourceFactory.getEntityManager()) {
+            em.getTransaction().begin();
+            em.createQuery("DELETE FROM Mesa m WHERE m.lixo = true")
+                    .executeUpdate();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

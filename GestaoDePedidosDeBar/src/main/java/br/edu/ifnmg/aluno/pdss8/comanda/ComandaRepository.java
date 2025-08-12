@@ -57,4 +57,78 @@ public class ComandaRepository extends Repository<Comanda> {
                     .getResultList();
         }
     }
+    
+    // Métodos para a lixeira
+
+    public void moverParaLixeira(Comanda comanda) {
+        comanda.setLixo(true);
+        saveOrUpdate(comanda);
+    }
+
+    public void moverParaLixeiraId(Long id) {
+        Comanda comanda = findById(id);
+        if (comanda != null) {
+            moverParaLixeira(comanda);
+        }
+    }
+
+    public void moverParaLixeira(List<Comanda> comandas) {
+        for (Comanda comanda : comandas) {
+            moverParaLixeira(comanda);
+        }
+    }
+
+    public List<Comanda> buscarTodosNaLixeira() {
+        try (var em = DataSourceFactory.getEntityManager()) {
+            return em.createQuery(
+                    "SELECT c FROM Comanda c WHERE c.lixo = true",
+                    Comanda.class).getResultList();
+        }
+    }
+
+    public Comanda buscarNaLixeiraId(Long id) {
+        try (var em = DataSourceFactory.getEntityManager()) {
+            return em.createQuery(
+                    "SELECT c FROM Comanda c WHERE c.id = :id AND c.lixo = true",
+                    Comanda.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public void restaurar(Comanda comanda) {
+        comanda.setLixo(false);
+        saveOrUpdate(comanda);
+    }
+
+    public void restaurarId(Long id) {
+        Comanda comanda = findById(id);
+        if (comanda != null) {
+            restaurar(comanda);
+        }
+    }
+
+    public void excluirDefinitivamente(Comanda comanda) {
+        delete(comanda);
+    }
+
+    public void excluirDefinitivamenteId(Long id) {
+        Comanda comanda = findById(id);
+        if (comanda != null) {
+            excluirDefinitivamente(comanda);
+        }
+    }
+
+    public void esvaziarLixeira() {
+        try (var em = DataSourceFactory.getEntityManager()) {
+            em.getTransaction().begin();
+            em.createQuery("DELETE FROM Comanda c WHERE c.lixo = true")
+                    .executeUpdate();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -22,6 +22,8 @@ public class Mesa extends ProjectEntity implements Serializable {
     @Column(length = 255)
     private String localizacao; // Ex: "Área externa", "Salão principal"
 
+    private boolean lixo = false;
+    
     // Getters e Setters
     public int getNumero() {
         return numero;
@@ -53,6 +55,14 @@ public class Mesa extends ProjectEntity implements Serializable {
 
     public void setLocalizacao(String localizacao) {
         this.localizacao = localizacao;
+    }
+    
+    public boolean isLixo() {
+        return lixo;
+    }
+
+    public void setLixo(boolean lixo) {
+        this.lixo = lixo;
     }
 
     @Override

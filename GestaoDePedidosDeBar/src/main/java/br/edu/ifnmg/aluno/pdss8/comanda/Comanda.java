@@ -25,6 +25,8 @@ public class Comanda extends ProjectEntity implements Serializable {
     @OneToMany(mappedBy = "comanda", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Pedido> pedidos = new ArrayList<>();
 
+    private boolean lixo = false;
+    
     // Getters e Setters
     public int getNumeroMesa() {
         return numeroMesa;
@@ -44,6 +46,14 @@ public class Comanda extends ProjectEntity implements Serializable {
 
     public List<Pedido> getPedidos() {
         return pedidos;
+    }
+    
+    public boolean isLixo() {
+        return lixo;
+    }
+
+    public void setLixo(boolean lixo) {
+        this.lixo = lixo;
     }
 
     public void adicionarPedido(Pedido pedido) {
