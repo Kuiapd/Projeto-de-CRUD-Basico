@@ -1,15 +1,19 @@
 package br.edu.ifnmg.aluno.iro.main;
 
-
 import br.edu.ifnmg.aluno.pdss8.cardapio.ItemCardapio;
 import br.edu.ifnmg.aluno.pdss8.cardapio.ItemCardapioRepository;
 import br.edu.ifnmg.aluno.pdss8.comanda.Comanda;
 import br.edu.ifnmg.aluno.pdss8.comanda.ComandaRepository;
 import br.edu.ifnmg.aluno.iro.pedido.Pedido;
 import br.edu.ifnmg.aluno.iro.pedido.PedidoRepository;
+import br.edu.ifnmg.aluno.pdss8.mesa.Mesa;
+import br.edu.ifnmg.aluno.pdss8.mesa.MesaRepository;
+import br.edu.ifnmg.aluno.pdss8.funcionario.Funcionario;
+import br.edu.ifnmg.aluno.pdss8.funcionario.FuncionarioRepository;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
-
 
 public class Program {
 
@@ -38,39 +42,39 @@ public class Program {
         System.out.println("Itens do cardápio salvos.");
 
         System.out.println("\n=== CRIANDO COMANDAS (MESAS) ===");
-        Comanda mesa1 = new Comanda();
-        mesa1.setNumeroMesa(1);
-        mesa1.setPago(false);
-        comandaRepo.saveOrUpdate(mesa1);
+        Comanda comanda1 = new Comanda();
+        comanda1.setNumeroMesa(1);
+        comanda1.setPago(false);
+        comandaRepo.saveOrUpdate(comanda1);
 
-        Comanda mesa2 = new Comanda();
-        mesa2.setNumeroMesa(2);
-        mesa2.setPago(false);
-        comandaRepo.saveOrUpdate(mesa2);
+        Comanda comanda2 = new Comanda();
+        comanda2.setNumeroMesa(2);
+        comanda2.setPago(false);
+        comandaRepo.saveOrUpdate(comanda2);
 
         System.out.println("Comandas criadas e salvas.");
 
         System.out.println("\n=== CRIANDO PEDIDOS E ASSOCIANDO A COMANDAS ===");
 
-        // Pedido para mesa 1
+        // Pedido para comanda 1
         Pedido pedido1 = new Pedido();
-        pedido1.setComanda(mesa1);
+        pedido1.setComanda(comanda1);
         pedido1.adicionarItem(pizza, 2);
         pedido1.adicionarItem(refri, 3);
         pedidoRepo.saveOrUpdate(pedido1);
 
-        mesa1.adicionarPedido(pedido1);
-        comandaRepo.saveOrUpdate(mesa1);
+        comanda1.adicionarPedido(pedido1);
+        comandaRepo.saveOrUpdate(comanda1);
 
-        // Pedido para mesa 2
+        // Pedido para comanda 2
         Pedido pedido2 = new Pedido();
-        pedido2.setComanda(mesa2);
+        pedido2.setComanda(comanda2);
         pedido2.adicionarItem(cerveja, 4);
         pedido2.adicionarItem(refri, 2);
         pedidoRepo.saveOrUpdate(pedido2);
 
-        mesa2.adicionarPedido(pedido2);
-        comandaRepo.saveOrUpdate(mesa2);
+        comanda2.adicionarPedido(pedido2);
+        comandaRepo.saveOrUpdate(comanda2);
 
         System.out.println("Pedidos criados, associados e salvos.");
 
@@ -120,12 +124,60 @@ public class Program {
         }
 
         System.out.println("\n=== BUSCANDO PEDIDOS PELA COMANDA DA MESA 2 ===");
-        List<Pedido> pedidosMesa2 = pedidoRepo.findByComandaId(mesa2.getId());
+        List<Pedido> pedidosMesa2 = pedidoRepo.findByComandaId(comanda2.getId());
         for (Pedido p : pedidosMesa2) {
             System.out.println("Pedido #" + p.getId() + " da mesa " + p.getComanda().getNumeroMesa());
             for (Map.Entry<ItemCardapio, Integer> e : p.getItens().entrySet()) {
                 System.out.println(" - " + e.getKey().getNome() + ": " + e.getValue());
             }
+        }
+
+        // Repositórios para Mesa e Funcionário
+        MesaRepository mesaRepo = new MesaRepository();
+        FuncionarioRepository funcionarioRepo = new FuncionarioRepository();
+
+        System.out.println("\n=== CRIANDO MESAS ===");
+        Mesa mesa1 = new Mesa();
+        mesa1.setNumero(1);
+        mesa1.setCapacidade(4);
+        mesa1.setLocalizacao("Salão principal");
+        mesa1.setOcupada(false);
+        mesaRepo.saveOrUpdate(mesa1);
+
+        Mesa mesa2 = new Mesa();
+        mesa2.setNumero(2);
+        mesa2.setCapacidade(6);
+        mesa2.setLocalizacao("Área externa");
+        mesa2.setOcupada(false);
+        mesaRepo.saveOrUpdate(mesa2);
+
+        System.out.println("Mesas criadas e salvas.");
+
+        System.out.println("\n=== CRIANDO FUNCIONÁRIOS ===");
+        Funcionario func1 = new Funcionario();
+        func1.setNome("Ana Beatriz");
+        func1.setCpf("123.456.789-00");
+        func1.setDataNascimento(LocalDate.of(1990, 5, 12));
+        funcionarioRepo.saveOrUpdate(func1);
+
+        Funcionario func2 = new Funcionario();
+        func2.setNome("Carlos Silva");
+        func2.setCpf("987.654.321-00");
+        func2.setDataNascimento(LocalDate.of(1985, 8, 22));
+        funcionarioRepo.saveOrUpdate(func2);
+
+        System.out.println("Funcionários criados e salvos.");
+
+        System.out.println("\n=== LISTANDO MESAS ===");
+        List<Mesa> mesas = mesaRepo.findAll();
+        for (Mesa m : mesas) {
+            System.out.println(m);
+        }
+
+        System.out.println("\n=== LISTANDO FUNCIONÁRIOS ===");
+        List<Funcionario> funcionarios = funcionarioRepo.findAll();
+        for (Funcionario f : funcionarios) {
+            System.out.println(f);
         }
 
         System.out.println("\n=== TESTE FINALIZADO ===");
