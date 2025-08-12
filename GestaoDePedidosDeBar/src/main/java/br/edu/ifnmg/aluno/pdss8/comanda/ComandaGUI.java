@@ -4,28 +4,30 @@
  */
 package br.edu.ifnmg.aluno.pdss8.comanda;
 
+import java.awt.event.ItemEvent;
+import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.Timer;
 
 /**
  *
  * @author Loiola
  */
 public class ComandaGUI extends javax.swing.JPanel {
-    
-    private DefaultListModel<Comanda> modelComanda; 
+
+    private DefaultListModel<Comanda> modelComanda;
     private ComandaRepository repository;
 
     /**
      * Creates new form ComandaGUI
      */
     public ComandaGUI() {
-        
+
         repository = new ComandaRepository();
         modelComanda = new DefaultListModel<>();
         modelComanda.addAll(repository.findAll());
         initComponents();
-        
-        
+
     }
 
     /**
@@ -37,6 +39,7 @@ public class ComandaGUI extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         lblNumero = new javax.swing.JLabel();
@@ -44,6 +47,17 @@ public class ComandaGUI extends javax.swing.JPanel {
         chkPago = new javax.swing.JCheckBox();
         btnSalvar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
+        btnParaLixeira = new javax.swing.JButton();
+        radAtivos = new javax.swing.JRadioButton();
+        radExcluidos = new javax.swing.JRadioButton();
+        lblComanda = new javax.swing.JLabel();
+        lblLixeira = new javax.swing.JLabel();
+        btnRestaurar = new javax.swing.JButton();
+        btnExcluir = new javax.swing.JButton();
+        btnEsvaziar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        lstComanda = new javax.swing.JList<>();
+        lblAlerta = new javax.swing.JLabel();
 
         lblNumero.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblNumero.setText("Número da mesa:");
@@ -70,7 +84,7 @@ public class ComandaGUI extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lblNumero)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNumero, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)))
+                        .addComponent(txtNumero, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -88,20 +102,127 @@ public class ComandaGUI extends javax.swing.JPanel {
                 .addComponent(chkPago)
                 .addGap(18, 18, 18)
                 .addComponent(btnSalvar)
-                .addContainerGap(106, Short.MAX_VALUE))
+                .addContainerGap(121, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Cadastro", jPanel1);
+
+        btnParaLixeira.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnParaLixeira.setText("Mover Para a Lixeira");
+        btnParaLixeira.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnParaLixeiraActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(radAtivos);
+        radAtivos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        radAtivos.setSelected(true);
+        radAtivos.setText("Não Excluídos");
+        radAtivos.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                radAtivosItemStateChanged(evt);
+            }
+        });
+
+        buttonGroup1.add(radExcluidos);
+        radExcluidos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        radExcluidos.setText("Excluídos");
+        radExcluidos.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                radExcluidosItemStateChanged(evt);
+            }
+        });
+
+        lblComanda.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblComanda.setText("Comanda:");
+
+        lblLixeira.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblLixeira.setText("Lixeira:");
+
+        btnRestaurar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnRestaurar.setText("Restaurar");
+        btnRestaurar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRestaurarActionPerformed(evt);
+            }
+        });
+
+        btnExcluir.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
+
+        btnEsvaziar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnEsvaziar.setText("Esvaziar Lixeira");
+        btnEsvaziar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEsvaziarActionPerformed(evt);
+            }
+        });
+
+        lstComanda.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lstComanda.setModel(modelComanda);
+        jScrollPane1.setViewportView(lstComanda);
+
+        lblAlerta.setBackground(new java.awt.Color(255, 255, 0));
+        lblAlerta.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblAlerta.setForeground(new java.awt.Color(255, 0, 0));
+        lblAlerta.setText("Selecione Um Item");
+        lblAlerta.setOpaque(true);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 388, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(lblComanda)
+                        .addGap(160, 160, 160)
+                        .addComponent(lblAlerta)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblLixeira)
+                            .addComponent(btnParaLixeira, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(radExcluidos)
+                            .addComponent(radAtivos)
+                            .addComponent(btnRestaurar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnEsvaziar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 253, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblComanda)
+                    .addComponent(lblAlerta))
+                .addGap(1, 1, 1)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(radAtivos)
+                        .addGap(3, 3, 3)
+                        .addComponent(radExcluidos)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnParaLixeira)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblLixeira)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnRestaurar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnExcluir)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnEsvaziar))
+                    .addComponent(jScrollPane1))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Listagem", jPanel2);
@@ -125,36 +246,126 @@ public class ComandaGUI extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        
+
         int num = Integer.parseInt(txtNumero.getText());
         boolean pago;
-        if(chkPago.isSelected()) {
+        if (chkPago.isSelected()) {
             pago = true;
         } else {
             pago = false;
         }
-        
+
         Comanda c1 = new Comanda();
         c1.setNumeroMesa(num);
         c1.setPago(pago);
-        
+
         repository.saveOrUpdate(c1);
         clearFields();
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-     private void clearFields() {
+    private void btnParaLixeiraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnParaLixeiraActionPerformed
+        if (lstComanda.getSelectedIndices().length == 0) {
+            showWarning("Selecione ao menos um item");
+        }
+        if (lstComanda.getSelectedIndices().length == 1) {
+            Comanda selected = lstComanda.getSelectedValue();
+            repository.moverParaLixeira(selected);
+            modelComanda.removeElement(selected);
+        } else {
+            List<Comanda> selection = lstComanda.getSelectedValuesList();
+            repository.moverParaLixeira(selection);
+            for (Comanda i : selection) {
+                modelComanda.removeElement(i);
+            }
+        }
+    }//GEN-LAST:event_btnParaLixeiraActionPerformed
+
+    private void btnRestaurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestaurarActionPerformed
+        if (lstComanda.getSelectedIndices().length == 0) {
+            showWarning("Selecione um item");
+        }
+        if (lstComanda.getSelectedIndices().length == 1) {
+            Comanda selected = lstComanda.getSelectedValue();
+            repository.restaurar(selected);
+            modelComanda.removeElement(selected);
+        }
+    }//GEN-LAST:event_btnRestaurarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        if (lstComanda.getSelectedIndices().length == 0) {
+            showWarning("Selecione um item");
+        }
+        if (lstComanda.getSelectedIndices().length == 1) {
+            Comanda selected = lstComanda.getSelectedValue();
+            repository.excluirDefinitivamente(selected);
+            modelComanda.removeElement(selected);
+        }
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnEsvaziarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEsvaziarActionPerformed
+        repository.esvaziarLixeira();
+    }//GEN-LAST:event_btnEsvaziarActionPerformed
+
+    private void radAtivosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_radAtivosItemStateChanged
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            atualizarBotoes(true);
+            modelComanda.clear();
+            modelComanda.addAll(repository.findAll());
+        }
+    }//GEN-LAST:event_radAtivosItemStateChanged
+
+    private void radExcluidosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_radExcluidosItemStateChanged
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            atualizarBotoes(false);
+            modelComanda.clear();
+            modelComanda.addAll(repository.buscarTodosNaLixeira());
+        }
+    }//GEN-LAST:event_radExcluidosItemStateChanged
+
+    private void showWarning(String warning) {
+        lblAlerta.setText(warning);
+        lblAlerta.setVisible(true);
+
+        Timer timer = new Timer(4000, (e) -> {
+            lblAlerta.setVisible(false);
+            ((Timer) e.getSource()).stop();
+        });
+        timer.setRepeats(false);
+        timer.start();
+    }
+
+    private void atualizarBotoes(boolean status) {
+        btnParaLixeira.setEnabled(status);
+        btnExcluir.setEnabled(!status);
+        btnRestaurar.setEnabled(!status);
+        btnEsvaziar.setEnabled(!status);
+    }
+
+    private void clearFields() {
         txtNumero.setText(null);
         chkPago.setSelected(false);
         txtNumero.requestFocus();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEsvaziar;
+    private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnParaLixeira;
+    private javax.swing.JButton btnRestaurar;
     private javax.swing.JButton btnSalvar;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JCheckBox chkPago;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JLabel lblAlerta;
+    private javax.swing.JLabel lblComanda;
+    private javax.swing.JLabel lblLixeira;
     private javax.swing.JLabel lblNumero;
+    private javax.swing.JList<String> lstComanda;
+    private javax.swing.JRadioButton radAtivos;
+    private javax.swing.JRadioButton radExcluidos;
     private javax.swing.JTextField txtNumero;
     // End of variables declaration//GEN-END:variables
 }
