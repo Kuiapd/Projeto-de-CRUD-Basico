@@ -51,7 +51,7 @@ public class PedidoRepository extends Repository<Pedido> {
     public List<Pedido> findByComandaId(Long comandaId) {
     try (var em = DataSourceFactory.getEntityManager()) {
         return em.createQuery(
-            "SELECT p FROM Pedido p JOIN FETCH p.comanda WHERE p.comanda.id = :comandaId",
+            "SELECT p FROM Pedido p WHERE p.comanda = :comanda",
             Pedido.class)
             .setParameter("comandaId", comandaId)
             .getResultList();

@@ -166,6 +166,11 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
                 radAtivosItemStateChanged(evt);
             }
         });
+        radAtivos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radAtivosActionPerformed(evt);
+            }
+        });
 
         buttonGroup1.add(radExcluidos);
         radExcluidos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -173,6 +178,11 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
         radExcluidos.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 radExcluidosItemStateChanged(evt);
+            }
+        });
+        radExcluidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radExcluidosActionPerformed(evt);
             }
         });
 
@@ -339,6 +349,14 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
             modelCardapio.addAll(repository.buscarTodosNaLixeira());
         }
     }//GEN-LAST:event_radExcluidosItemStateChanged
+
+    private void radAtivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radAtivosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_radAtivosActionPerformed
+
+    private void radExcluidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radExcluidosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_radExcluidosActionPerformed
 
     private void atualizarBotoes(boolean status) {
         btnParaLixeira.setEnabled(status);
