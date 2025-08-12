@@ -20,8 +20,6 @@ public class Funcionario extends ProjectEntity implements Serializable {
     @Column(nullable = false, unique = true, length = 14)
     private String cpf;
 
-    @Column(nullable = false)
-    private LocalDate dataNascimento;
 
     private boolean lixo = false;
     // Getters e Setters
@@ -41,14 +39,7 @@ public class Funcionario extends ProjectEntity implements Serializable {
         this.cpf = cpf;
     }
 
-    public LocalDate getDataNascimento() {
-        return dataNascimento;
-    }
 
-    public void setDataNascimento(LocalDate dataNascimento) {
-        this.dataNascimento = dataNascimento;
-    }
-    
     public boolean isLixo() {
         return lixo;
     }
@@ -63,7 +54,6 @@ public class Funcionario extends ProjectEntity implements Serializable {
                 "id=" + getId() +
                 ", nome='" + nome + '\'' +
                 ", cpf='" + cpf + '\'' +
-                ", dataNascimento=" + dataNascimento +
                 '}';
     }
 }
