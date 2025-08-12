@@ -267,7 +267,7 @@ public class ItemCardapioGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        repository = new ItemCardapioRepository();
+        
         String nome = txtNome.getText();
         double preco = Double.parseDouble(txtPreco.getText());
 

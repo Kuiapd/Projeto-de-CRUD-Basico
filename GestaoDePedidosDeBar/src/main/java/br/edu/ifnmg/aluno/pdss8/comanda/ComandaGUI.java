@@ -4,17 +4,28 @@
  */
 package br.edu.ifnmg.aluno.pdss8.comanda;
 
+import javax.swing.DefaultListModel;
+
 /**
  *
  * @author Loiola
  */
 public class ComandaGUI extends javax.swing.JPanel {
+    
+    private DefaultListModel<Comanda> modelComanda; 
+    private ComandaRepository repository;
 
     /**
      * Creates new form ComandaGUI
      */
     public ComandaGUI() {
+        
+        repository = new ComandaRepository();
+        modelComanda = new DefaultListModel<>();
+        modelComanda.addAll(repository.findAll());
         initComponents();
+        
+        
     }
 
     /**
@@ -28,17 +39,56 @@ public class ComandaGUI extends javax.swing.JPanel {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
+        lblNumero = new javax.swing.JLabel();
+        txtNumero = new javax.swing.JTextField();
+        chkPago = new javax.swing.JCheckBox();
+        btnSalvar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
+
+        lblNumero.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblNumero.setText("Número da mesa:");
+
+        chkPago.setText("Pago");
+
+        btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 388, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(chkPago)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblNumero)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtNumero, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 253, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNumero)
+                    .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
+                .addComponent(chkPago)
+                .addGap(18, 18, 18)
+                .addComponent(btnSalvar)
+                .addContainerGap(106, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Cadastro", jPanel1);
@@ -74,10 +124,37 @@ public class ComandaGUI extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        
+        int num = Integer.parseInt(txtNumero.getText());
+        boolean pago;
+        if(chkPago.isSelected()) {
+            pago = true;
+        } else {
+            pago = false;
+        }
+        
+        Comanda c1 = new Comanda();
+        c1.setNumeroMesa(num);
+        c1.setPago(pago);
+        
+        repository.saveOrUpdate(c1);
+        clearFields();
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+     private void clearFields() {
+        txtNumero.setText(null);
+        chkPago.setSelected(false);
+        txtNumero.requestFocus();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnSalvar;
+    private javax.swing.JCheckBox chkPago;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JLabel lblNumero;
+    private javax.swing.JTextField txtNumero;
     // End of variables declaration//GEN-END:variables
 }
