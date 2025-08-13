@@ -10,7 +10,7 @@ public class FuncionarioRepository extends Repository<Funcionario> {
 
     @Override
     public String getJpqlFindAll() {
-        return "SELECT f FROM Funcionario f";
+        return "SELECT f FROM Funcionario f WHERE f.lixo = false";
     }
 
     @Override
@@ -25,13 +25,14 @@ public class FuncionarioRepository extends Repository<Funcionario> {
 
     // Buscar por CPF (resultado único)
     public Funcionario findByCpf(String cpf) {
-        try (var em = DataSourceFactory.getEntityManager()) {
-            return em.createQuery(
-                    "SELECT f FROM Funcionario f WHERE f.cpf = :cpf", Funcionario.class)
-                    .setParameter("cpf", cpf)
-                    .getSingleResult();
-        }
+    try (var em = DataSourceFactory.getEntityManager()) {
+        return em.createQuery(
+                "SELECT f FROM Funcionario f WHERE f.cpf = :cpf", Funcionario.class)
+                .setParameter("cpf", cpf)
+                .getSingleResult();
     }
+}
+
 
     // Buscar por nome contendo (resultado múltiplo)
     public List<Funcionario> findByNomeContaining(String nome) {
@@ -42,9 +43,8 @@ public class FuncionarioRepository extends Repository<Funcionario> {
                     .getResultList();
         }
     }
-    
-     // Métodos para a lixeira
 
+    // Métodos para a lixeira
     public void moverParaLixeira(Funcionario funcionario) {
         funcionario.setLixo(true);
         saveOrUpdate(funcionario);

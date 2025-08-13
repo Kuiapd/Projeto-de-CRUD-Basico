@@ -14,7 +14,7 @@ public class MesaRepository extends Repository<Mesa> {
 
     @Override
     public String getJpqlFindAll() {
-        return "SELECT m FROM Mesa m";
+        return "SELECT m FROM Mesa m WHERE m.lixo = false";
     }
 
     @Override
