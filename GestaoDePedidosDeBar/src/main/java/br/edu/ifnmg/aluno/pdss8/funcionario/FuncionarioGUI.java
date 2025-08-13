@@ -81,6 +81,11 @@ public class FuncionarioGUI extends javax.swing.JFrame {
                 ExcluidosItemStateChanged(evt);
             }
         });
+        Excluidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ExcluidosActionPerformed(evt);
+            }
+        });
 
         buttonGroup1.add(NãoExcluidos);
         NãoExcluidos.setText("Não Excluídos");
@@ -88,6 +93,11 @@ public class FuncionarioGUI extends javax.swing.JFrame {
         NãoExcluidos.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 NãoExcluidosItemStateChanged(evt);
+            }
+        });
+        NãoExcluidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NãoExcluidosActionPerformed(evt);
             }
         });
 
@@ -331,6 +341,14 @@ public class FuncionarioGUI extends javax.swing.JFrame {
         modelFuncionario.addAll(repository.findAll());  // Carrega os não excluídos
     }
     }//GEN-LAST:event_NãoExcluidosItemStateChanged
+
+    private void ExcluidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExcluidosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ExcluidosActionPerformed
+
+    private void NãoExcluidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NãoExcluidosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_NãoExcluidosActionPerformed
     
     private void atualizarBotoes(boolean status) {
         ParaLixeira.setEnabled(status);
