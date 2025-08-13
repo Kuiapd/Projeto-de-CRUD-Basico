@@ -17,7 +17,7 @@ public class Mesa extends ProjectEntity implements Serializable {
     private int capacidade; // Quantas pessoas cabem na mesa
 
     @Column(nullable = false)
-    private boolean ocupada = false; // Se a mesa está ocupada ou livre
+    private String ocupada; // Se a mesa está ocupada ou livre
 
     @Column(length = 255)
     private String localizacao; // Ex: "Área externa", "Salão principal"
@@ -41,11 +41,11 @@ public class Mesa extends ProjectEntity implements Serializable {
         this.capacidade = capacidade;
     }
 
-    public boolean isOcupada() {
+    public String getOcupada() {
         return ocupada;
     }
 
-    public void setOcupada(boolean ocupada) {
+    public void setOcupada(String ocupada) {
         this.ocupada = ocupada;
     }
 
